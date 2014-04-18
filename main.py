@@ -34,7 +34,7 @@ def random_literal():
 
 def random_value(depth=1):
     rv = random_value
-    choices = (0, 1, 2, 3, 4, 5)
+    choices = range(10)
     if depth >= 3:
         choices = (0, 1)
 
@@ -51,6 +51,14 @@ def random_value(depth=1):
         return "%s(%s)" % (random_identifier(), rv(depth+1))
     if choice is 5:
         return "%s(%s, %s=%s)" % (random_identifier(), rv(depth+1), random_identifier(), rv(depth+1))
+    if choice is 6:
+        return "%s.%s" % (random_identifier(), random_identifier())
+    if choice is 7:
+        return "%s.%s(%s)" % (random_identifier(), random_identifier(), random_identifier())
+    if choice is 8:
+        return "%s.%s()" % (random_identifier(), random_identifier())
+    if choice is 8:
+        return "%s()" % (random_identifier().capitalize()) 
 
 def random_statement(indent=1):
     pad = "    " * indent
