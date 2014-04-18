@@ -1,4 +1,4 @@
-typist
+Typist
 ======
 
 Typist generates syntactically correct nonsense programs in Python.
