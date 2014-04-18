@@ -8,11 +8,15 @@ with open("/usr/share/dict/words", "r") as f:
 with open("/usr/share/dict/connectives", "r") as f:
     CONNECTIVES = f.readlines()
 
+SOFTWARE_PREFIXES = ("is", "num", "count")
+
 def random_identifier():
     if random.random() > 0.5:
         return random.choice(WORDS).strip().lower()
 
     i = random.choice(CONNECTIVES).strip()
+    if random.random() < 0.2:
+        i = random.choice(SOFTWARE_PREFIXES)
     i = i + "_"
     i = i + random.choice(WORDS).strip()
     return i.lower()
@@ -51,7 +55,7 @@ def random_value(depth=1):
 def random_statement(indent=1):
     pad = "    " * indent
 
-    choice = random.randint(0, 2)
+    choice = random.randint(0, 3)
     if choice is 0 or indent >= 3:
         return "%s%s = %s" % (pad, random_identifier(), random_value())
 
@@ -67,6 +71,12 @@ def random_statement(indent=1):
 
     if choice is 2:
         return "%s%s()" % (pad, random_identifier())
+    if choice is 3:
+        return """%sfor %s in %s:
+%s""" % (
+        pad, random_identifier(),
+        random_value(indent+1),
+        random_statement(indent+1))
 
 class Cursor(object):
     def __init__(self):
